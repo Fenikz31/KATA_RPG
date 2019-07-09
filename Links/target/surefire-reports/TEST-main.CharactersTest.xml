@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="main.CharactersTest" time="0.056" tests="9" errors="0" skipped="0" failures="1">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/mnt/d/WORKSPACE/Kata_RPG/Links/target/test-classes:/mnt/d/WORKSPACE/Kata_RPG/Links/target/classes:/home/fenikz/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/fenikz/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
+    <property name="sun.java.command" value="/mnt/d/WORKSPACE/Kata_RPG/Links/target/surefire/surefirebooter5887466247148633257.jar /mnt/d/WORKSPACE/Kata_RPG/Links/target/surefire 2019-06-29T15-56-31_255-jvmRun1 surefire1855932062392117201tmp surefire_014386790035162225194tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/mnt/d/WORKSPACE/Kata_RPG/Links/target/test-classes:/mnt/d/WORKSPACE/Kata_RPG/Links/target/classes:/home/fenikz/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/fenikz/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/fenikz"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2019-04-16"/>
+    <property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/mnt/d/WORKSPACE/Kata_RPG/Links"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/mnt/d/WORKSPACE/Kata_RPG/Links/target/surefire/surefirebooter5887466247148633257.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.3+7-Ubuntu-1ubuntu218.04.1"/>
+    <property name="user.name" value="fenikz"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.4.0-17763-Microsoft"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/fenikz/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="11.0.3"/>
+    <property name="user.dir" value="/mnt/d/WORKSPACE/Kata_RPG/Links"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.version" value="11.0.3+7-Ubuntu-1ubuntu218.04.1"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="Given_TwoCharacters_When_DealingMoreDamageThanCurrentHealth_Then_SetPlayerToDead" classname="main.CharactersTest" time="0.027"/>
+  <testcase name="Given_TwoCharacters_When_OneAttacks_Then_DealDamage" classname="main.CharactersTest" time="0.006">
+    <failure message="expected:&lt;998.5&gt; but was:&lt;999.0&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<998.5> but was:<999.0>
+	at main.CharactersTest.Given_TwoCharacters_When_OneAttacks_Then_DealDamage(CharactersTest.java:28)
+]]></failure>
+    <system-out><![CDATA[Player1 attacks Player2 and deals 0.5. Player2health is 998.5.
+]]></system-out>
+  </testcase>
+  <testcase name="Given_Character_When_HealingOthers_Then_ReturnError" classname="main.CharactersTest" time="0"/>
+  <testcase name="Given_Character_When_AttackingOneself_Then_ReturnAbortMessage" classname="main.CharactersTest" time="0.006"/>
+  <testcase name="Given_Targetwith5LevelOrMoreAbove_When_Attacking_Then_ReduceDamagebyHalf" classname="main.CharactersTest" time="0.007"/>
+  <testcase name="Given_Characters_When_Created_Then_StatsStarts_At_1000_1_And_True" classname="main.CharactersTest" time="0"/>
+  <testcase name="Given_TwoCharacters_When_Healing_Then_RaiseHealth" classname="main.CharactersTest" time="0"/>
+  <testcase name="Given_TwoCharacters_When_HealingAbove1000_Then_SetHealthAt1000" classname="main.CharactersTest" time="0"/>
+  <testcase name="Given_Targetwith5LevelOrMoreBelow_When_Attacking_Then_IncreaseDamagebyHalf" classname="main.CharactersTest" time="0.006"/>
+</testsuite>

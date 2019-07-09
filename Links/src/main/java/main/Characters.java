@@ -81,7 +81,6 @@ public class Characters {
             opponent.setHealth(opponent.getHealth() - damage * 1.5);
             System.out.println(getPlayerName() + " attacks " + opponent.getPlayerName() + " and deals " + damage / 2 + ". " + opponent.getPlayerName() + "health is " + opponent.getHealth() + ".");
         } else {
-
             setHealth(0);
             setAlive(false);
         }

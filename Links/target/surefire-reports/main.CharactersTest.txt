@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: main.CharactersTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.056 s <<< FAILURE! - in main.CharactersTest
+Given_TwoCharacters_When_OneAttacks_Then_DealDamage(main.CharactersTest)  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: expected:<998.5> but was:<999.0>
+	at main.CharactersTest.Given_TwoCharacters_When_OneAttacks_Then_DealDamage(CharactersTest.java:28)
+
