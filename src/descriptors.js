@@ -1,0 +1,4 @@
+export const CHARACTERS = {
+    ATTACK: 'CHARACTERS.ATTACK',
+    CREATE: 'CHARACTERS.CREATE',
+}

@@ -1,9 +1,19 @@
 {
-  "name": "KATA_RPG",
+  "name": "katarpg",
   "version": "1.0.0",
   "description": "This is a fun kata that has the programmer building simple combat rules, as for a role-playing game (RPG). It is implemented as a sequence of iterations.",
   "main": "index.js",
   "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/polyfill": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
     "babel-loader": "^8.0.6",
     "babel-watch": "^7.0.0",
     "convert-source-map": "^1.7.0",
@@ -15,12 +25,14 @@
     "file-loader": "^5.0.2",
     "fpu": "^0.3.8",
     "json-loader": "^0.5.7",
+    "mocha": "^7.0.0",
     "p-limit": "^2.2.2",
     "p-try": "^2.2.0",
     "path-parse": "^1.0.6",
     "prop-types": "^15.7.2",
-    "react-dom": "^16.12.0",
     "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
@@ -29,14 +41,15 @@
     "sockjs-client": "^1.4.0",
     "source-map": "^0.5.7",
     "style-loader": "^1.1.3",
-    "webpack-cli": "^3.3.10",
     "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
   },
   "devDependencies": {
     "mocha": "^7.0.0"
   },
   "scripts": {
+    "sandbox": "babel-watch sandbox.js",
     "test": "mocha"
   },
   "repository": {
