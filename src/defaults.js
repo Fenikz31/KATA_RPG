@@ -5,6 +5,7 @@ export const BASE = {
   heal: 1,
   health: 10,
   intelligence: 5,
+  mana: 5,
   stamina: 5
 }
 
