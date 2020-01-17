@@ -1,7 +1,11 @@
 export const BASE = {
+  agilty: 5,
   damage: 1,
+  dexterity: 5,
   heal: 1,
-  health: 10
+  health: 10,
+  intelligence: 5,
+  stamina: 5
 }
 
 export const CHARACTER = {
