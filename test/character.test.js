@@ -5,7 +5,7 @@ describe('Characters', () => {
     describe('Create a character Object', () => {
         const defaultCharacter = {
             alive: true,
-            agility: 10,
+            agility: 5,
             dexterity: 5,
             intelligence: 5,
             health: 10,
@@ -25,17 +25,17 @@ describe('Characters', () => {
     Health becomes 0 and the character dies */
 
     describe('Character deals damage to another', () => {
-        const attackerCharacter = {
+        const characters = {
             alive: true,
-            agility: 10,
+            agility: 5,
             dexterity: 5,
             intelligence: 5,
             health: 10,
             stamina: 10,
         }
-        const targetCharacter = {
+        const target = {
             alive: true,
-            agility: 10,
+            agility: 5,
             dexterity: 5,
             intelligence: 5,
             health: 10,
@@ -43,9 +43,9 @@ describe('Characters', () => {
         }
 
         it('attack', () => {
-            const result = attackerCharacter.attack(targetCharacter)
-            expect(result).toHaveProperty('health', )
-        }
-        )
+            const result = characters.attack()
+            console.log(result)
+            expect(result).toHaveProperty('health', 5)
+        })
     })
 })
