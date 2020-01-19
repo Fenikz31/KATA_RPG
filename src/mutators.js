@@ -37,7 +37,21 @@ export const Characters = {
     }
   },
 
-  /* heal (s, p) {
+  gainXP (s, p) {
+    const { addXp, character } = p,
+          { xp } = s[character],
+          value = xp + addXp
+
+    return {
+      ...s,
+      [ character ]: {
+        ...s[character],
+        xp: value 
+      }
+    }
+  },
+
+  heal (s, p) {
     const { heal, character } = p,
           { health, maxHealth } = s[character],
           value = health + heal
@@ -49,5 +63,17 @@ export const Characters = {
         health: value > maxHealth ? maxHealth : value
       }
     }
-  } */
+  },
+
+  levelUp (s, p) {
+    const { level } = s
+
+    return {
+      ...s,
+      [ character ]: {
+        ...s[character],
+        level: level++
+      }
+    }
+  },
 }
