@@ -1,4 +1,4 @@
-export const characters = {
+export const Characters = {
 
     create(s, p) {
         return {
@@ -19,8 +19,6 @@ export const characters = {
 
             damage = offense - defense
             value = health - damage
-            
-
 
         return {
             ...s,
@@ -29,8 +27,6 @@ export const characters = {
                 alive: value > 0,
                 health: value > 0 ? value : 0
             }
-
         }
-
     }
 }
