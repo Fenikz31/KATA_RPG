@@ -1,29 +1,37 @@
 import { CHARACTERS } from './descriptors'
 
-const attack = (target) => ({
-    type: CHARACTERS.ATTACK,
-    payload: target
-})
+function attack(target) {
+    return {
+        type: CHARACTERS.ATTACK,
+        payload: target
+    }
+}
 
-const create = () => ({
-    type: CHARACTERS.CREATE,
-})
+function create() {
+    { type: CHARACTERS.CREATE }
+}
 
-const gainXp = (xp) => ({
-    type: CHARACTERS.GAIN_XP,
-    payload: xp
-})
+function gainXp(xp) {
+    return {
+        type: CHARACTERS.GAIN_XP,
+        payload: xp
+    }
+}
 
-const heal = (target) => ({
-    type: CHARACTERS.HEAL,
-    payload: target
-})
+function heal(target) {
+    return {
+        type: CHARACTERS.HEAL,
+        payload: target
+    }
+}
 
-const levelUp = () => ({
-    type: CHARACTERS.LEVEL_UP,
-})
+function levelUp() {
+    return { type: CHARACTERS.LEVEL_UP }
+}
 
-const move = (x, y) => ({
-    type: CHARACTERS.MOVE,
-    payload: { x, y}
-})
+function move(x, y) {
+    return {
+        type: CHARACTERS.MOVE,
+        payload: { x, y }
+    }
+}
