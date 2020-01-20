@@ -14,6 +14,38 @@ export const CharacterConnector = CreateConnector(
     }),
     
     (dispatch) => ({
-        attack
-    })
+        attack({target = null} = {}) {
+            dispatch({ type: CHARACTERS.ATTACK, target })
+        }
+    }),
+    
+    (dispatch) => ({
+        create() {
+            dispatch({ type: CHARACTERS.CREATE })
+        }
+    }),
+    
+    (dispatch) => ({
+        gainXp(xp) {
+            dispatch({ type: CHARACTERS.GAIN_XP, xp })
+        }
+    }),
+    
+    (dispatch) => ({
+        heal(target) {
+            dispatch({ type: CHARACTERS.HEAL, target })
+        }
+    }),
+    
+    (dispatch) => ({
+        levelUp() {
+            dispatch({ type: CHARACTERS.LEVEL_UP })
+        }
+    }),
+    
+    (dispatch) => ({
+        move({ x = null, y= null} = {}) {
+            dispatch({ type: CHARACTERS.MOVE,x ,y })
+        }
+    }),
 )
