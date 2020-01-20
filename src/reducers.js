@@ -13,7 +13,15 @@ export const CharactersReducer = CharactersReducerCreator(
     CHARACTERS.CREATE
   ),
 
-  /* ConnectMutator( Characters.heal,
+  ConnectMutator( Characters.gainXP,
+    CHARACTERS.GAIN_XP
+  ),
+
+  ConnectMutator( Characters.heal,
     CHARACTERS.HEAL
-  ) */
+  ),
+
+  ConnectMutator( Characters.levelUp,
+    CHARACTERS.LEVEL_UP
+  ),
 )
