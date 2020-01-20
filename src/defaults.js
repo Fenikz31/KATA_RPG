@@ -1,5 +1,5 @@
 export const BASE = {
-  agilty: 5,
+  agility: 5,
   damage: 1,
   dexterity: 5,
   heal: 1,
@@ -17,7 +17,7 @@ export const CHARACTER = {
 
 export const RACES = {
   ELF: {
-    agilty: 5,
+    agility: 5,
     damage: 1,
     dexterity: 5,
     heal: 2,
@@ -29,7 +29,7 @@ export const RACES = {
   },
 
   HUMAN: {
-    agilty: 5,
+    agility: 5,
     damage: 1,
     dexterity: 5,
     heal: 1,
@@ -41,7 +41,7 @@ export const RACES = {
   },
 
   ORC: {
-    agilty: 5,
+    agility: 5,
     damage: 2,
     dexterity: 5,
     heal: -1,

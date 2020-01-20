@@ -17,8 +17,8 @@ export const Characters = {
             offense = (attacker.dexterity) * 3,
             defense = (target.agility) * 2
 
-            damage = offense - defense
-            value = health - damage
+        damage = offense - defense
+        value = health - damage
 
         return {
             ...s,

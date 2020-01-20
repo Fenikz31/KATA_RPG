@@ -4,9 +4,12 @@ import { Dice } from './utils.js'
 
 export const Characters = {
   attack (s, p) {
-    const { damage, target } = p,
-          { health } = s[target],
-          value = health - damage
+    const { character, damage, target } = p,
+          { health, agility } = s[target],
+          offense = (s[character].dexterity)*0.3,
+          defense = agility * 0.2,
+
+          value = health - offense - defense
 
     return {
       ...s,
@@ -72,7 +75,7 @@ export const Characters = {
       ...s,
       [ character ]: {
         ...s[character],
-        level: level++
+        level: level
       }
     }
   },
