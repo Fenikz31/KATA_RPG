@@ -6,7 +6,8 @@ export const BASE = {
   health: 10,
   intelligence: 5,
   mana: 5,
-  stamina: 5
+  stamina: 5,
+  xp: 0
 }
 
 export const CHARACTER = {
@@ -23,7 +24,8 @@ export const RACES = {
     health: 15,
     intelligence: 5,
     mana: 5,
-    stamina: 5
+    stamina: 5,
+    xp: 0
   },
 
   HUMAN: {
@@ -34,7 +36,8 @@ export const RACES = {
     health: 20,
     intelligence: 5,
     mana: 5,
-    stamina: 5
+    stamina: 5,
+    xp: 0
   },
 
   ORC: {
@@ -45,6 +48,7 @@ export const RACES = {
     health: 10,
     intelligence: 5,
     mana: 5,
-    stamina: 5
+    stamina: 5,
+    xp: 0
   }
 }

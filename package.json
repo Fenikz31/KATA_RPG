@@ -50,6 +50,7 @@
   },
   "scripts": {
     "sandbox": "babel-watch sandbox.js",
+    "index": "babel-watch src/index.js",
     "watch": "webpack-dev-server --compress --open --progress --watch --hot",
     "watch:test": "mocha --require @babel/register --check-leaks --inspect --watch test/index.js",
     "coverage": "nyc npm run test",

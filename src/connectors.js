@@ -26,7 +26,7 @@ export const CharacterConnector = CreateConnector(
     }),
     
     (dispatch) => ({
-        gainXp(xp) {
+        gainXp({ xp = 10}) {
             dispatch({ type: CHARACTERS.GAIN_XP, xp })
         }
     }),
