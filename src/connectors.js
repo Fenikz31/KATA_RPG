@@ -43,9 +43,9 @@ export const CharacterConnector = CreateConnector(
         }
     }),
     
-    (dispatch) => ({
+    /* (dispatch) => ({
         move({ x = null, y= null} = {}) {
             dispatch({ type: CHARACTERS.MOVE,x ,y })
         }
-    }),
+    }), */
 )
