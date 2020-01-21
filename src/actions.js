@@ -14,7 +14,7 @@ export function create() {
 export function gainXp(xp) {
     return {
         type: CHARACTERS.GAIN_XP,
-        payload: xp
+        // payload: xp
     }
 }
 

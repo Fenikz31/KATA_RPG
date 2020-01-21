@@ -4,7 +4,7 @@ import { Dice } from './utils.js'
 
 export const Characters = {
   attack (s, p) {
-    const { character, damage, target } = p,
+    const { character, target } = p,
           { health, agility } = s[target],
           offense = (s[character].dexterity)*0.3,
           defense = agility * 0.2,
@@ -16,7 +16,9 @@ export const Characters = {
       [ target ]: {
         ...s[target],
         alive: value > 0,
-        health: value > 0 ? value : 0
+        defense: defense,
+        health: value > 0 ? value : 0,
+        offense: defense
       }
     }
   },
@@ -41,17 +43,19 @@ export const Characters = {
   },
 
   gainXP (s, p) {
-    const { addXp, character } = p,
-          { xp } = s[character],
-          value = xp + addXp
+    console.log('s: ', s)
+    // console.log('p: ', p)
+    // const { addXp, character } = p,
+    //       { xp } = s[character],
+    //       value = xp + addXp
 
-    return {
-      ...s,
-      [ character ]: {
-        ...s[character],
-        xp: value 
-      }
-    }
+    // return {
+    //   ...s,
+    //   [ character ]: {
+    //     ...s[character],
+    //     xp: value 
+    //   }
+    // }
   },
 
   heal (s, p) {
