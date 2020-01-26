@@ -1,0 +1,18 @@
+{
+    "KATA": { 
+        "GAME": {
+            "START": "GAME.START",
+            "FIGHT": "GAME.FIGHT",
+            "ROUND": "GAME.ROUND",
+            "INITIATIVE": "GAME.INITIATIVE",
+            "ORDER": "GAME.ORDER",
+            "NEXT": "GAME.NEXT",
+            "CHECK": "GAME.CHECK",
+            "END": "GAME.END"
+        },
+        "CHARACTER": {
+            "CREATE" : "CHARACTER.CREATE",
+            "ATTACK" : "CHARACTER.ATTACK"
+        }
+}
+}

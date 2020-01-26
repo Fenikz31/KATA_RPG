@@ -16,7 +16,7 @@ export const GameMiddleware = (store) => (next) => (payload) => {
   console.log('store: ', store.getState())
 
   switch (type) {
-    case CHARACTERS.ATTACK:
+    // case CHARACTERS.ATTACK:
     case CHARACTERS.CREATE:
       if (names.length === 2 && alives) {
         const attacker = names[Dice(2) - 1]
@@ -32,18 +32,8 @@ export const GameMiddleware = (store) => (next) => (payload) => {
           target: names.filter((name) => name !== attacker)[0],
           // damage: Dice(6, 2)
         })
-        console.log(`CHARACTER------------------`)
-        console.log('characters: ', characters[target])
-        console.log(`------------------`)
-        console.log('defense: ', defense)
-        console.log('offense: ', offense)
-        console.log(`${character} hit ${target} for ${damage}`)
-        console.log(`${target} health is ${characters[target].health}`)
-
-        if (!characters[target].alive)
-          console.log(`${target} die !`)
-
       }
+
       break
 
     case CHARACTERS.GAIN_XP:

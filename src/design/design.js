@@ -1,0 +1,25 @@
+/*
+GAME.START => {
+    CHARACTER.CREATE ->
+    CHARACTER.CREATE ->
+    GAME.FIGHT ->
+}
+
+GAME.FIGHT => {
+    CHARACTER.INITIATIVE ->
+    CHARACTER.ORDER ->
+    GAME.ROUND
+}
+
+GAME.ROUND => {
+    CHARACTER.ATTACK ->
+    GAME.NEXT
+}
+
+GAME.NEXT => {
+    GAME.CHECK
+        -> GAME.END
+        -> GAME.ROUND
+}
+
+*/
