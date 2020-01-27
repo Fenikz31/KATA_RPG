@@ -92,35 +92,26 @@ export const Characters = {
     let character = names.map(
       (name) => s[name].character
     )
-    /* .reduce(
-      (a, b) => a && b, true
-    ) */
 
-
-
-    console.log('----------------------------------------------------------')
-    console.log('names:  ', names)
-    console.log('----------------------------------------------------------')
-    console.log('pkan.character:  ', pkan.character)
-    console.log('attacker:  ', character)
-    console.log('----------------------------------------------------------')
-
-    if (character !== undefined) {
-      if (character !== pkan.character) {
-        character = pkan.character
-      } else character = fera.character
+    if (character[0] !== undefined) {
+      console.log('I am not undefined!')
+      if (character[0] !== pkan.character) {
+        character[0] = pkan.target
+      } else {
+        character[0] = fera.target
+      }
     }
 
     return {
       ...s,
       ['pkan']: {
         ...pkan,
-        character: character,
+        character: character[0],
         target: names.filter((name) => name !== character)[0],
       },
       ['fera']: {
         ...fera,
-        character: character,
+        character: character[0],
         target: names.filter((name) => name !== character)[0],
       },
 
