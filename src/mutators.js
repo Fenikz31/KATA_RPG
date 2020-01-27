@@ -90,7 +90,7 @@ export const Characters = {
     
     return {
       ...s,
-      
+      initiative: substractValues(s.initiative)
     }
 
   },
