@@ -47,69 +47,82 @@ export const Characters = {
 
   initiative(s, p) {
 
-    const names = Object.keys(s),
-    { pkan, fera } = s,
-    // arrNames = names.forEach(name => console.log(name)),
-    name = names.map((name) => ({ name })).reduce((a, v) => ({ ...a, ...v }), {}),
-    initiative = names.map((name) => ({ [name]: Dice(s[name].dexterity + s[name].agility) }))
-    .reduce((a, v) => ({ ...a, ...v }), {})
-    // names = Object.keys(s).map((name) =>({...name}), {}),
-    // player = characters.map(name => name),
-    //initiative attributes to compare
+    const { pkan, fera } = s,
+      names = Object.keys(s),
+      initiative = names.map((name) => ({
+        [name]: Dice(s[name].dexterity + s[name].agility)
+      }))
+        .reduce((a, v) => ({ ...a, ...v }), {}),
+      alives = names.map(
+        (name) => s[name].alive
+      ).reduce(
+        (a, b) => a && b, true
+      )
 
+    let attacker = null
 
-/*     console.log('------------------------------ ')
-    console.log('pkan: ', pkan)
-    console.log('name: ', name)
-    console.log('names: ', names)
-    console.log('initiative: ',initiative.pkan)
-    console.log('initiative: ',initiative)
-    console.log('------------------------------ ') */
+    if (attacker !== undefined && alives) {
+      if ((pkan.initiative - fera.initiative) >= 0) {
+        attacker = names[0]
+      } else attacker = names[1]
+    }
+
     return {
       ...s,
-      ['pkan'] : {
+      ['pkan']: {
         ...pkan,
-        initiative: initiative.pkan
+        initiative: initiative.pkan,
+        character: attacker,
+        target: names.filter((name) => name !== attacker)[0],
       },
-      ['fera'] : {
+      ['fera']: {
         ...fera,
-        initiative: initiative.fera
+        initiative: initiative.fera,
+        character: attacker,
+        target: names.filter((name) => name !== attacker)[0],
       },
-      
+
     }
 
   },
 
   order(s, p) {
-    const { character, type, target, damage, name } = p,
-    { characters, defense, offense } = s,
-    names = Object.keys(s).map((name) => s[type]),//.reduce((a, v) => ({ ...a, ...v }), {})
-    substractValues = obj => Object.values(obj).reduce((a, b) => a - b)
 
-    // alives = names.map(
-    //   (name) => s[name].alive
-    // ).reduce(
-    //   (a, b) => a && b, true
-    // )
+    const { pkan, fera } = s,
+      names = Object.keys(s),
+      alives = names.map(
+        (name) => s[name].alive
+      ).reduce(
+        (a, b) => a && b, true
+      )
 
-    console.log('s: ', s.pkan.initiative)
-    console.log('p.params :', p.type)
-
-    console.log(substractValues(s.initiative))
+    let attacker = null
 
 
+    console.log('----------------------------------------------------------')
+    console.log('s:  ', s)
+    console.log('----------------------------------------------------------')
+    console.log('attacker:  ', attacker)
+    console.log('----------------------------------------------------------')
 
-    if (names.length === 2 && alives) {
-      const attacker = names[Dice(2) - 1]
-
-      Object.keys(characters).forEach((name) => {
-        console.log(name, JSON.stringify(characters[name]))
-      })
+    if (attacker !== undefined) {
+      if ((pkan.initiative - fera.initiative) >= 0) {
+        attacker = names[0]
+      } else attacker = names[1]
     }
-    
+
     return {
-      // initiative: s.initiative,
-      // ...s,
+      ...s,
+      ['pkan']: {
+        ...pkan,
+        character: attacker,
+        target: names.filter((name) => name !== attacker)[0],
+      },
+      ['fera']: {
+        ...fera,
+        character: attacker,
+        target: names.filter((name) => name !== attacker)[0],
+      },
 
     }
 
