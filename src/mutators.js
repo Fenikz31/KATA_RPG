@@ -61,11 +61,9 @@ export const Characters = {
 
     let attacker = null
 
-    if (attacker !== undefined && alives) {
-      if ((pkan.initiative - fera.initiative) >= 0) {
-        attacker = names[0]
-      } else attacker = names[1]
-    }
+    if ((initiative.pkan >= initiative.fera)) {
+      attacker = names[0]
+    } else attacker = names[1]
 
     return {
       ...s,
@@ -89,39 +87,41 @@ export const Characters = {
   order(s, p) {
 
     const { pkan, fera } = s,
-      names = Object.keys(s),
-      alives = names.map(
-        (name) => s[name].alive
-      ).reduce(
-        (a, b) => a && b, true
-      )
+      names = Object.keys(s)
 
-    let attacker = null
+    let character = names.map(
+      (name) => s[name].character
+    )
+    /* .reduce(
+      (a, b) => a && b, true
+    ) */
+
 
 
     console.log('----------------------------------------------------------')
-    console.log('s:  ', s)
+    console.log('names:  ', names)
     console.log('----------------------------------------------------------')
-    console.log('attacker:  ', attacker)
+    console.log('pkan.character:  ', pkan.character)
+    console.log('attacker:  ', character)
     console.log('----------------------------------------------------------')
 
-    if (attacker !== undefined) {
-      if ((pkan.initiative - fera.initiative) >= 0) {
-        attacker = names[0]
-      } else attacker = names[1]
+    if (character !== undefined) {
+      if (character !== pkan.character) {
+        character = pkan.character
+      } else character = fera.character
     }
 
     return {
       ...s,
       ['pkan']: {
         ...pkan,
-        character: attacker,
-        target: names.filter((name) => name !== attacker)[0],
+        character: character,
+        target: names.filter((name) => name !== character)[0],
       },
       ['fera']: {
         ...fera,
-        character: attacker,
-        target: names.filter((name) => name !== attacker)[0],
+        character: character,
+        target: names.filter((name) => name !== character)[0],
       },
 
     }
