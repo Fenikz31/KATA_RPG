@@ -1,6 +1,7 @@
 import { MergeObject } from '../lib/utils'
 import { BASE, CHARACTER, RACES, GAME } from './defaults.js'
 import { Dice } from './utils.js'
+import { CHARACTERS } from './descriptors'
 
 export const Characters = {
   attack(s, p) {
@@ -32,6 +33,7 @@ export const Characters = {
           [attribut]: RACES[race][attribut] + BASE[attribut]
         })))
 
+
     return {
       ...s,
       [p.name]: {
@@ -45,18 +47,35 @@ export const Characters = {
 
   initiative(s, p) {
 
-    const characters = Object.keys(s),
-    initiative = characters.map((name) => ({ [name]: Dice(s[name].dexterity + s[name].agility) }))
+    const names = Object.keys(s),
+    { pkan, fera } = s,
+    // arrNames = names.forEach(name => console.log(name)),
+    name = names.map((name) => ({ name })).reduce((a, v) => ({ ...a, ...v }), {}),
+    initiative = names.map((name) => ({ [name]: Dice(s[name].dexterity + s[name].agility) }))
     .reduce((a, v) => ({ ...a, ...v }), {})
     // names = Object.keys(s).map((name) =>({...name}), {}),
     // player = characters.map(name => name),
     //initiative attributes to compare
 
 
-    // console.log(names)
+/*     console.log('------------------------------ ')
+    console.log('pkan: ', pkan)
+    console.log('name: ', name)
+    console.log('names: ', names)
+    console.log('initiative: ',initiative.pkan)
+    console.log('initiative: ',initiative)
+    console.log('------------------------------ ') */
     return {
       ...s,
-      initiative: initiative,
+      ['pkan'] : {
+        ...pkan,
+        initiative: initiative.pkan
+      },
+      ['fera'] : {
+        ...fera,
+        initiative: initiative.fera
+      },
+      
     }
 
   },
@@ -73,7 +92,7 @@ export const Characters = {
     //   (a, b) => a && b, true
     // )
 
-    console.log('s: ', Object.keys(s.initiative))
+    console.log('s: ', s.pkan.initiative)
     console.log('p.params :', p.type)
 
     console.log(substractValues(s.initiative))
@@ -89,8 +108,9 @@ export const Characters = {
     }
     
     return {
-      ...s,
-      initiative: substractValues(s.initiative)
+      // initiative: s.initiative,
+      // ...s,
+
     }
 
   },
