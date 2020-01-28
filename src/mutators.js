@@ -5,23 +5,52 @@ import { CHARACTERS } from './descriptors'
 
 export const Characters = {
   attack(s, p) {
-    const { character, target } = p,
+    const { pkan, fera } = s,
+      names = Object.keys(s)
+
+    const target = names.map(
+      (name) => s[name].target
+    ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+      character = names.map(
+        (name) => s[name].character
+      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
       { health, agility } = s[target],
-      offense = (s[character].dexterity) * 0.3,
-      defense = agility * 0.2,
+      offense = (s[character].dexterity + s[character].damage) * 0.2,
+      defense = agility * 0.23,
 
       value = health - offense + defense
+
+      console.log([character] + ' hits for ' + offense + ' ' + [target])
+      console.log([target] + ' defense is ' + defense + '. ' + [target] + ' takes '+ (health - value) + ' damage.')
+
 
     return {
       ...s,
       [target]: {
         ...s[target],
         alive: value > 0,
-        defense: defense,
+        // defense: defense,
         health: value > 0 ? value : 0,
-        offense: offense
+        // offense: offense
       }
     }
+    // const { character, target } = p,
+    //   { health, agility } = s[target],
+    //   offense = (s[character].dexterity) * 0.3,
+    //   defense = agility * 0.2,
+
+    //   value = health - offense + defense
+
+    // return {
+    //   ...s,
+    //   [target]: {
+    //     ...s[target],
+    //     alive: value > 0,
+    //     defense: defense,
+    //     health: value > 0 ? value : 0,
+    //     offense: offense
+    //   }
+    // }
   },
 
   create(s, p) {
@@ -61,7 +90,7 @@ export const Characters = {
 
     let attacker = null
 
-    if ((initiative.pkan >= initiative.fera)) {
+    if ((initiative.pkan >= initiative.fera) && (initiative.pkan !== initiative.fera)) {
       attacker = names[0]
     } else attacker = names[1]
 
@@ -91,14 +120,14 @@ export const Characters = {
 
     let character = names.map(
       (name) => s[name].character
-    )
+    ).reduce((a, b) => a.includes(b) ? a : [...a, b], [])
 
     if (character[0] !== undefined) {
       console.log('I am not undefined!')
-      if (character[0] !== pkan.character) {
-        character[0] = pkan.target
+      if (character !== pkan.character) {
+        character = pkan.target
       } else {
-        character[0] = fera.target
+        character = fera.target
       }
     }
 
@@ -106,18 +135,24 @@ export const Characters = {
       ...s,
       ['pkan']: {
         ...pkan,
-        character: character[0],
+        character: character,
         target: names.filter((name) => name !== character)[0],
       },
       ['fera']: {
         ...fera,
-        character: character[0],
+        character: character,
         target: names.filter((name) => name !== character)[0],
       },
 
     }
 
   },
+
+  getRound(s, p) {
+
+
+  },
+
   /* 
   gainXP (s, p) {
     console.log('s: ', s)
