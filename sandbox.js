@@ -21,17 +21,19 @@ Store.dispatch({ type: GAME.FIGHT })
 
 Store.dispatch({ type: CHARACTERS.INITIATIVE })
 
-// Store.dispatch({ type: CHARACTERS.ORDER })
+Store.dispatch({ type: GAME.ROUND })
 
+Store.dispatch({ type: CHARACTERS.ATTACK })
 
-// const { action, characters, game } = Store.getState(),
-// { initiative } = characters,
-// names = Object.keys(characters)//.map((name) => name)
-// //.reduce((a, v) => ({ ...a, ...v }), {})
+Store.dispatch({ type: CHARACTERS.ORDER })
 
-// console.log('initiative: ', initiative)
-// console.log('names: ', names)
+Store.dispatch({ type: CHARACTERS.CHECK })
 
-// if(initiative < 0) {
+Store.dispatch({ type: CHARACTERS.ATTACK })
 
-// }
+Store.dispatch({ type: CHARACTERS.ORDER })
+
+Store.dispatch({ type: CHARACTERS.CHECK })
+
+Store.dispatch({ type: GAME.ROUND })
+

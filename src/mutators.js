@@ -1,27 +1,23 @@
 import { MergeObject } from '../lib/utils'
 import { BASE, CHARACTER, RACES, GAME } from './defaults.js'
 import { Dice } from './utils.js'
-import { CHARACTERS } from './descriptors'
 
 export const Characters = {
   attack(s, p) {
-    const { pkan, fera } = s,
-      names = Object.keys(s)
+    const names = Object.keys(s),
 
-    const target = names.map(
-      (name) => s[name].target
-    ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      character = names.map(
-        (name) => s[name].character
-      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+      target = names.map((name) => s[name].target)
+        .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+      character = names.map((name) => s[name].character)
+        .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
       { health, agility } = s[target],
-      offense = (s[character].dexterity + s[character].damage) * 0.2,
-      defense = agility * 0.23,
+      offense = (s[character].dexterity + s[character].damage) * 0.3,
+      defense = agility * 0.4,
 
       value = health - offense + defense
 
-      console.log([character] + ' hits for ' + offense + ' ' + [target])
-      console.log([target] + ' defense is ' + defense + '. ' + [target] + ' takes '+ (health - value) + ' damage.')
+    console.log([character] + ' hits for ' + offense + ' ' + [target])
+    console.log([target] + ' defense is ' + defense + '. ' + [target] + ' takes ' + (health - value) + ' damage.')
 
 
     return {
@@ -29,28 +25,9 @@ export const Characters = {
       [target]: {
         ...s[target],
         alive: value > 0,
-        // defense: defense,
         health: value > 0 ? value : 0,
-        // offense: offense
       }
     }
-    // const { character, target } = p,
-    //   { health, agility } = s[target],
-    //   offense = (s[character].dexterity) * 0.3,
-    //   defense = agility * 0.2,
-
-    //   value = health - offense + defense
-
-    // return {
-    //   ...s,
-    //   [target]: {
-    //     ...s[target],
-    //     alive: value > 0,
-    //     defense: defense,
-    //     health: value > 0 ? value : 0,
-    //     offense: offense
-    //   }
-    // }
   },
 
   create(s, p) {
@@ -76,126 +53,89 @@ export const Characters = {
 
   initiative(s, p) {
 
-    const { pkan, fera } = s,
-      names = Object.keys(s),
-      initiative = names.map((name) => ({
-        [name]: Dice(s[name].dexterity + s[name].agility)
+    const names = Object.keys(s),
+      initiativeArr = names.map((name) => ({
+        player: name,
+        score: Dice(s[name].dexterity + s[name].agility)
       }))
-        .reduce((a, v) => ({ ...a, ...v }), {}),
-      alives = names.map(
-        (name) => s[name].alive
-      ).reduce(
-        (a, b) => a && b, true
-      )
-
-    let attacker = null
-
-    if ((initiative.pkan >= initiative.fera) && (initiative.pkan !== initiative.fera)) {
-      attacker = names[0]
-    } else attacker = names[1]
+      ,
+      fastest = initiativeArr
+        .reduce((a, b) => (a.score || 0) >= b.score ? a : b, {}),
+      target = initiativeArr
+        .reduce((a, b) => (b.score || 0) > a.score ? a : b, {})
 
     return {
       ...s,
-      ['pkan']: {
-        ...pkan,
-        initiative: initiative.pkan,
-        character: attacker,
-        target: names.filter((name) => name !== attacker)[0],
+      [fastest.player]: {
+        ...s[fastest.player],
+        initiative: fastest.score,
+        character: fastest.player,
+        target: names.filter((name) => name !== fastest.player)[0]
       },
-      ['fera']: {
-        ...fera,
-        initiative: initiative.fera,
-        character: attacker,
-        target: names.filter((name) => name !== attacker)[0],
-      },
-
+      [target.player]: {
+        ...s[target.player],
+        initiative: target.score,
+        character: fastest.player,
+        target: names.filter((name) => name !== fastest.player)[0]
+      }
     }
-
   },
 
   order(s, p) {
 
-    const { pkan, fera } = s,
-      names = Object.keys(s)
+    const names = Object.keys(s),
+      character = names.map(
+        (name) => s[name].character
+      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+      target = names.map(
+        (name) => s[name].target
+      ).reduce((a, b) => a.includes(b) ? a : [...a, b], [])
 
-    let character = names.map(
-      (name) => s[name].character
-    ).reduce((a, b) => a.includes(b) ? a : [...a, b], [])
-
-    if (character[0] !== undefined) {
-      console.log('I am not undefined!')
-      if (character !== pkan.character) {
-        character = pkan.target
-      } else {
-        character = fera.target
-      }
-    }
+    const attacker = attacker !== (character || undefined) ? target[0] : character[0],
+      opponent = opponent !== (target || undefined) ? character[0] : target[0]
 
     return {
       ...s,
-      ['pkan']: {
-        ...pkan,
-        character: character,
-        target: names.filter((name) => name !== character)[0],
+      [character]: {
+        ...s[character],
+        character: attacker,
+        target: opponent
       },
-      ['fera']: {
-        ...fera,
-        character: character,
-        target: names.filter((name) => name !== character)[0],
-      },
+      [target]: {
+        ...s[target],
+        character: attacker,
+        target: opponent
+      }
+    }
+  },
 
+  check(s, p) {
+
+    const names = Object.keys(s),
+      character = names.map(
+        (name) => s[name].character
+      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+      target = names.map(
+        (name) => s[name].target
+      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+
+      health = names.map(
+        (name) => s[name].health
+      ),
+
+      alive = s[target].health > 0 ? s[target].alive : !s[target].alive
+
+
+    return {
+      ...s,
+      [target]: {
+        ...s[target],
+        alive: alive,
+      }
     }
 
   },
 
-  getRound(s, p) {
-
-
-  },
-
-  /* 
-  gainXP (s, p) {
-    console.log('s: ', s)
-    console.log('p: ', p)
-      const { addXp, character } = p,
-      { xp } = s[character],
-      value = xp + addXp
-      
-      return {
-        ...s,
-        [ character ]: {
-          ...s[character],
-          xp: value 
-        }
-      }
-      return s
-    },
-  
-    heal (s, p) {
-      const { heal, character } = p,
-      { health, maxHealth } = s[character],
-      value = health + heal
-  
-      return {
-        ...s,
-        [ character ]: {
-          ...s[character],
-          health: value > maxHealth ? maxHealth : value
-        }
-      }
-    },
-  
-    levelUp (s, p) {
-      const { level } = s
-      
-      return {
-        ...s,
-        [ character ]: {
-          ...s[character],
-          level: level
-        }
-      }
-    }, */
 }
 
 export const Game = {
@@ -229,17 +169,6 @@ export const Game = {
     }
   },
 
-  order(s, p) {
-    console.log('s: ', s)
-    console.log('p: ', p)
-    const { fight } = p
-
-    return {
-      ...s,
-      ready: !fight
-
-    }
-  },
 
 
 

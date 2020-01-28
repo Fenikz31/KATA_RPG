@@ -47,6 +47,7 @@ export const CharacterConnector = CreateConnector(
 
 export const GameConnector = CreateConnector(
     (state) => ({
+        characters: characters.state,
         game: game.state
     }),
 
@@ -94,7 +95,7 @@ export const GameConnector = CreateConnector(
 
     (dispatch) => ({
         check() {
-            dispatch({ type: GAME.CHECK })
+            dispatch({ type: CHARACTERS.CHECK })
         }
     }),
 

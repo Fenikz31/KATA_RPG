@@ -22,6 +22,10 @@ export const CharactersReducer = CharactersReducerCreator(
   ConnectMutator( Characters.order,
     CHARACTERS.ORDER
   ),
+  
+  ConnectMutator( Characters.check,
+    CHARACTERS.CHECK
+  ),
   /* 
   ConnectMutator( Characters.gainXP,
     CHARACTERS.GAIN_XP
@@ -49,5 +53,6 @@ export const GameReducers = GameReducerCreator(
   ConnectMutator( Game.fight,
     GAME.FIGHT
   ),
+
   
 )
