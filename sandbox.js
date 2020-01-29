@@ -1,10 +1,19 @@
 import { CHARACTERS, GAME } from './src/descriptors'
 import Store from './src/store'
 
+Store.subscribe(() => console.log(Store.getState()))
 
+Store.dispatch({
+    type: GAME.START, opponents: [
+        'pkan',
+        'fera'
+    ]
+})
+
+
+/*
 // Log the initial state
 console.log(Store.getState())
-
 
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener
@@ -35,3 +44,4 @@ Store.dispatch({ type: CHARACTERS.CHECK })
 
 Store.dispatch({ type: GAME.ROUND })
 
+ */

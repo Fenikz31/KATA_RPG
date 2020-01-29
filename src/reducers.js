@@ -1,6 +1,6 @@
 import { CreateReducer, ConnectMutator } from '../lib/factories'
 import { CHARACTERS, GAME } from './descriptors'
-import { Characters, Game  } from './mutators'
+import { Characters, Game } from './mutators'
 
 const CharactersReducerCreator = CreateReducer({})
 
@@ -10,23 +10,23 @@ const GameReducerCreator = CreateReducer({
 })
 
 export const CharactersReducer = CharactersReducerCreator(
-  ConnectMutator( Characters.attack,
+  ConnectMutator(Characters.attack,
     CHARACTERS.ATTACK
   ),
 
-  ConnectMutator( Characters.create,
+  ConnectMutator(Characters.create,
     CHARACTERS.CREATE
   ),
 
-  ConnectMutator( Characters.initiative,
+  ConnectMutator(Characters.initiative,
     CHARACTERS.INITIATIVE
   ),
 
-  ConnectMutator( Characters.order,
+  ConnectMutator(Characters.order,
     CHARACTERS.ORDER
   ),
-  
-  ConnectMutator( Characters.check,
+
+  ConnectMutator(Characters.check,
     CHARACTERS.CHECK
   ),
   /* 
@@ -46,13 +46,17 @@ export const CharactersReducer = CharactersReducerCreator(
 
 export const GameReducers = GameReducerCreator(
 
-  ConnectMutator( Game.start,
-    GAME.START
-  ),
-
-  ConnectMutator( Game.fight,
+  ConnectMutator(Game.fight,
     GAME.FIGHT
   ),
 
-  
+  ConnectMutator(Game.start,
+    GAME.START
+  ),
+
+  ConnectMutator(Game.ready,
+    GAME.READY
+  ),
+
+
 )

@@ -11,9 +11,9 @@ export const CHARACTERS = {
 }
 
 export const GAME = {
-    INIT: 'GAME.INIT',
-    START: 'GAME.START',
     FIGHT: 'GAME.FIGHT',
+    READY: 'GAME.READY',
+    START: 'GAME.START',
     ROUND: "GAME.ROUND",
     INITIATIVE: "GAME.INITIATIVE",
     NEXT: "GAME.NEXT",

@@ -1,86 +1,89 @@
-import { CHARACTERS } from './descriptors'
-import { Dice, countXp } from './utils'
+import { CHARACTERS, GAME } from './descriptors'
+import { Dice } from './utils'
+import { CHARACTER } from './defaults'
 
-export const GameMiddleware = (store) => (next) => (payload) => {
+export const GameMiddleware = ({ getState, dispatch }) => (next) => (payload) => {
   const result = next(payload),
-    { character, type, target, damage } = payload,
-    { characters, defense, offense } = store.getState(),
-    names = Object.keys(characters),
-    alives = names.map(
-      (name) => characters[name].alive
-    ).reduce(
-      (a, b) => a && b, true
-    )
-  console.log('---------------------------')
-  console.log('payload: ', payload)
-  console.log('store: ', store.getState())
+    { type } = payload,
+    { characters, game } = getState(),
+    { opponents } = game
+
 
   switch (type) {
-    // case CHARACTERS.ATTACK:
+
     case CHARACTERS.CREATE:
-      if (names.length === 2 && alives) {
-        const attacker = names[Dice(2) - 1]
 
-        Object.keys(characters).forEach((name) => {
-          console.log(name, JSON.stringify(characters[name]))
-        })
+    case GAME.START:
 
-        store.dispatch({
-          ...characters,
-          type: CHARACTERS.ATTACK,
-          character: attacker,
-          target: names.filter((name) => name !== attacker)[0],
-          // damage: Dice(6, 2)
-        })
+      const count = Object.keys(characters).length
+
+      if (count === 2) {
+        dispatch({ type: GAME.READY })
+      }
+      else {
+        const name = opponents[count]
+        dispatch({ type: CHARACTERS.CREATE, name })
       }
 
       break
 
-    case CHARACTERS.GAIN_XP:
-      if (!characters[target].alive) {
-        console.log(`------------------`)
-        console.log(`${target} dies`)
-        console.log(`${character} wins!`)
-        console.log('--------------------------------------')
-        console.log(characters)
-        console.log('--------------------------------------')
-      }
-      // store.dispatch({
-      //   type: CHARACTERS.GAIN_XP,
-      //   character: characters.alive,
-      //   xp: characters[attacker].xp + 10,
-      // })
+    case GAME.READY:
+
+      dispatch({ type: CHARACTERS.INITIATIVE })
+
       break
 
-    default:
+    case CHARACTERS.INITIATIVE:
+
+      dispatch({ type: GAME.ROUND })
+
       break
+
+    case GAME.ROUND:
+
+      dispatch({ type: CHARACTERS.ATTACK })
+
+      break
+
+    case CHARACTERS.ATTACK:
+
+      dispatch({ type: GAME.NEXT })
+
+      break
+
+    case GAME.NEXT:
+
+      dispatch({ type: CHARACTERS.CHECK })
+
+      break
+
+    case CHARACTERS.CHECK:
+
+      const names = Object.keys(characters),
+        character = names.map(
+          (name) => characters[name].attacker
+        ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+        opponent = names.map(
+          (name) => characters[name].target
+        ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+        alive = characters[opponent].alive
+
+      if (alive) {
+        dispatch({ type: CHARACTERS.ORDER })
+      }
+      else dispatch({ type: GAME.END })
+
+      break
+
+    case CHARACTERS.ORDER:
+
+      dispatch({ type: GAME.ROUND })
+
+      break
+
+      case GAME.END:
+        break
   }
 
   return result
 }
-
-
-// export const ReportMiddleware = (store) => (next) => (payload) => {
-//   const result = next(payload),
-//     { character, damage, heal, target, type } = payload,
-//     { characters } = store.getState()
-
-//   if (type === CHARACTERS.ATTACK) {
-//     console.log(`${character} hits ${target} for ${damage}`)
-
-//     if (!characters[target].alive)
-//       console.log(`${target} die !`)
-//   }
-//   else if (type === CHARACTERS.HEAL) {
-//     console.log(`${character} self heal for ${heal}`)
-//   }
-
-//   if (type !== CHARACTERS.CREATE) {
-//     Object.keys(characters).forEach((name) => {
-//       const { health, maxHealth } = characters[name]
-//       console.log(`* ${name}: ${health}/${maxHealth}`)
-//     })
-//   }
-
-//   return result
-// }

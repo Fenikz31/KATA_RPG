@@ -4,12 +4,11 @@ import ThunkMiddleware from 'redux-thunk'
 import {
     ErrorMiddleware
 } from '../lib/middlewares'
-/* 
+
 import {
   GameMiddleware,
-  ReportMiddleware
 } from './middlewares'
- */
+
 import {
   ActionReducer,
 } from '../lib/reducers'
@@ -25,7 +24,7 @@ import {
   const middlewares = composer( applyMiddleware(
     ThunkMiddleware,
     ErrorMiddleware,
-    // GameMiddleware,
+    GameMiddleware,
     // ReportMiddleware
   ))
   

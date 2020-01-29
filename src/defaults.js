@@ -13,7 +13,10 @@ export const BASE = {
 export const CHARACTER = {
   alive: true,
   level: 1,
-  initiative: 0
+  initiative: null,
+  attacker: null,
+  target: null,
+  dodge: null
 }
 
 export const RACES = {

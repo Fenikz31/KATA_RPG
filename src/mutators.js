@@ -1,16 +1,16 @@
 import { MergeObject } from '../lib/utils'
-import { BASE, CHARACTER, RACES, GAME } from './defaults.js'
+import { BASE, CHARACTER, RACES } from './defaults.js'
 import { Dice } from './utils.js'
 
 export const Characters = {
-  attack(s, p) {
+  attack(s) {
     const names = Object.keys(s),
 
       target = names.map((name) => s[name].target)
         .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      character = names.map((name) => s[name].character)
+      character = names.map((name) => s[name].attacker)
         .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      { health, agility, maxHealth} = s[target],
+      { health, agility, maxHealth } = s[target],
       offense = (s[character].dexterity + s[character].damage) * 3,
       defense = agility * 4,
 
@@ -19,13 +19,12 @@ export const Characters = {
     console.log([character] + ' hits for ' + offense + ' ' + [target])
     console.log([target] + ' defense is ' + defense + '. ' + [target] + ' takes ' + (health - value) + ' damage.')
 
-
     return {
       ...s,
       [target]: {
         ...s[target],
         alive: value > 0,
-        health: (value > maxHealth) ? maxHealth: (value > 0) ? value : 0
+        health: (value > maxHealth) ? maxHealth : (value > 0) ? value : 0
       }
     }
   },
@@ -36,9 +35,8 @@ export const Characters = {
       race = RACES[races[selection]],
       attributes = MergeObject(Object.keys(race)
         .map((attribut) => ({
-          [attribut]:race[attribut] + BASE[attribut]
+          [attribut]: race[attribut] + BASE[attribut]
         })))
-
 
     return {
       ...s,
@@ -50,7 +48,7 @@ export const Characters = {
     }
   },
 
-  initiative(s, p) {
+  initiative(s) {
 
     const names = Object.keys(s),
       initiativeArr = names.map((name) => ({
@@ -63,28 +61,29 @@ export const Characters = {
       target = initiativeArr
         .reduce((a, b) => (b.score || 0) > a.score ? a : b, {})
 
+
     return {
       ...s,
       [fastest.player]: {
         ...s[fastest.player],
         initiative: fastest.score,
-        character: fastest.player,
+        attacker: fastest.player,
         target: names.filter((name) => name !== fastest.player)[0]
       },
       [target.player]: {
         ...s[target.player],
         initiative: target.score,
-        character: fastest.player,
+        attacker: fastest.player,
         target: names.filter((name) => name !== fastest.player)[0]
       }
     }
   },
 
-  order(s, p) {
+  order(s) {
 
     const names = Object.keys(s),
       character = names.map(
-        (name) => s[name].character
+        (name) => s[name].attacker
       ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
       target = names.map(
         (name) => s[name].target
@@ -97,61 +96,44 @@ export const Characters = {
       ...s,
       [character]: {
         ...s[character],
-        character: attacker,
+        attacker: attacker,
         target: opponent
       },
       [target]: {
         ...s[target],
-        character: attacker,
+        attacker: attacker,
         target: opponent
       }
     }
   },
-
-  check(s, p) {
-
-    const names = Object.keys(s),
-      character = names.map(
-        (name) => s[name].character
-      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      target = names.map(
-        (name) => s[name].target
-      ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-
-      health = names.map(
-        (name) => s[name].health
-      ),
-
-      alive = s[target].health > 0 ? s[target].alive : !s[target].alive
-
-
-    return {
-      ...s,
-      [target]: {
-        ...s[target],
-        alive: alive,
-      }
-    }
-
-  },
-
 }
 
 export const Game = {
-
-  start(s, p) {
-
-    return {
-      ...s,
-      initialization: true
-    }
-  },
 
   fight(s, p) {
     return {
       ...s,
       ready: true
 
+    }
+  },
+
+  ready(s) {
+
+    return {
+      ...s,
+      ready: true
+    }
+  },
+
+  start(s, p) {
+
+    const { opponents } = p
+
+    return {
+      ...s,
+      initialization: true,
+      opponents
     }
   },
 
