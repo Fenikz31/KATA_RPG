@@ -10,9 +10,9 @@ export const Characters = {
         .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
       character = names.map((name) => s[name].character)
         .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      { health, agility } = s[target],
-      offense = (s[character].dexterity + s[character].damage) * 0.3,
-      defense = agility * 0.4,
+      { health, agility, maxHealth} = s[target],
+      offense = (s[character].dexterity + s[character].damage) * 3,
+      defense = agility * 4,
 
       value = health - offense + defense
 
@@ -25,7 +25,7 @@ export const Characters = {
       [target]: {
         ...s[target],
         alive: value > 0,
-        health: value > 0 ? value : 0,
+        health: (value > maxHealth) ? maxHealth: (value > 0) ? value : 0
       }
     }
   },
@@ -33,10 +33,10 @@ export const Characters = {
   create(s, p) {
     const races = Object.keys(RACES),
       selection = Dice(races.length) - 1,
-      race = races.filter((k, i) => i === selection)[0],
-      attributes = MergeObject(Object.keys(RACES[race])
+      race = RACES[races[selection]],
+      attributes = MergeObject(Object.keys(race)
         .map((attribut) => ({
-          [attribut]: RACES[race][attribut] + BASE[attribut]
+          [attribut]:race[attribut] + BASE[attribut]
         })))
 
 
@@ -46,7 +46,6 @@ export const Characters = {
         ...CHARACTER,
         ...attributes,
         maxHealth: attributes.health,
-        race
       }
     }
   },
@@ -140,36 +139,20 @@ export const Characters = {
 
 export const Game = {
 
-  init(s, p) {
-
-    return {
-      ...s,
-      ...GAME
-    }
-  },
-
   start(s, p) {
-    const { initialization } = p
 
     return {
       ...s,
-      ready: false,
-      initialization: !initialization,
-
+      initialization: true
     }
   },
 
   fight(s, p) {
-    const { fight } = p
-
     return {
       ...s,
-      ready: !fight
+      ready: true
 
     }
   },
-
-
-
 
 }

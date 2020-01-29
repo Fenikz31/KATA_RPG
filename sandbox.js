@@ -10,12 +10,10 @@ console.log(Store.getState())
 // Note that subscribe() returns a function for unregistering the listener
 Store.subscribe(() => console.log(Store.getState()))
 
-Store.dispatch({ type: GAME.INIT })
-
 Store.dispatch({ type: CHARACTERS.CREATE, name: 'pkan' })
 Store.dispatch({ type: CHARACTERS.CREATE, name: 'fera' })
 
-Store.dispatch({ type: GAME.START })
+// Store.dispatch({ type: GAME.START })
 
 Store.dispatch({ type: GAME.FIGHT })
 

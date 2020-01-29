@@ -4,7 +4,10 @@ import { Characters, Game  } from './mutators'
 
 const CharactersReducerCreator = CreateReducer({})
 
-const GameReducerCreator = CreateReducer({})
+const GameReducerCreator = CreateReducer({
+  ready: false,
+  initialization: false
+})
 
 export const CharactersReducer = CharactersReducerCreator(
   ConnectMutator( Characters.attack,
@@ -42,9 +45,6 @@ export const CharactersReducer = CharactersReducerCreator(
 )
 
 export const GameReducers = GameReducerCreator(
-  ConnectMutator( Game.init,
-    GAME.INIT 
-  ),
 
   ConnectMutator( Game.start,
     GAME.START

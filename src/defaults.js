@@ -53,8 +53,3 @@ export const RACES = {
     xp: 0
   }
 }
-
-export const GAME = {
-  initialization: false,
-  
-}
