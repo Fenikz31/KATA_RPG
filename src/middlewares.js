@@ -6,7 +6,7 @@ export const GameMiddleware = ({ getState, dispatch }) => (next) => (payload) =>
   const result = next(payload),
     { type } = payload,
     { characters, game } = getState(),
-    { opponents } = game
+    { opponents, turn, round } = game
 
 
   switch (type) {
@@ -35,55 +35,156 @@ export const GameMiddleware = ({ getState, dispatch }) => (next) => (payload) =>
 
     case CHARACTERS.INITIATIVE:
 
-      dispatch({ type: GAME.ROUND })
+      const scores = Object.keys(characters).map((name) => ({
+        name, value: characters[name].initiative
+      }))
+
+        , attacker = scores.reduce(
+          (a, b) => a.value < b.value ? b : a,
+          { value: 0 }
+        ).name
+
+        , defender = Object.keys(characters).filter(
+          (name) => name !== attacker
+        )[0]
+
+      dispatch({
+        type: GAME.ROUND.BEGIN,
+        attacker: attacker,
+        defender: defender
+      })
 
       break
 
-    case GAME.ROUND:
+    case GAME.ROUND.BEGIN:
 
-      dispatch({ type: CHARACTERS.ATTACK })
+
+      dispatch({
+        ...payload,
+        type: CHARACTERS.ATTACK
+      })
 
       break
 
     case CHARACTERS.ATTACK:
 
-      dispatch({ type: GAME.NEXT })
+      dispatch({
+        ...payload,
+        type: GAME.ROUND.NEXT
+      })
 
       break
 
-    case GAME.NEXT:
+    case GAME.ROUND.NEXT:
 
-      dispatch({ type: CHARACTERS.CHECK })
+      if (characters[payload.defender].alive) {
+        dispatch({
+          ...payload,
+          type: CHARACTERS.CHECK
+        })
+      }
+      else dispatch({
+        ...payload,
+        type: GAME.END
+      })
+
 
       break
 
     case CHARACTERS.CHECK:
 
-      const names = Object.keys(characters),
-        character = names.map(
-          (name) => characters[name].attacker
-        ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-        opponent = names.map(
-          (name) => characters[name].target
-        ).reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-        alive = characters[opponent].alive
+      if (turn % 2 !== 1) {
 
-      if (alive) {
-        dispatch({ type: CHARACTERS.ORDER })
+        dispatch({
+          ...payload,
+          type: CHARACTERS.ORDER
+        })
       }
-      else dispatch({ type: GAME.END })
+      else {
+        dispatch({
+          ...payload,
+          type: GAME.ROUND.END
+        })
+      }
 
       break
 
     case CHARACTERS.ORDER:
 
-      dispatch({ type: GAME.ROUND })
+      dispatch({
+        ...payload,
+        type: CHARACTERS.ATTACK,
+        attacker: payload.defender,
+        defender: payload.attacker
+      })
 
       break
 
-      case GAME.END:
-        break
+    case GAME.ROUND.END:
+
+      dispatch({ type: CHARACTERS.INITIATIVE })
+
+      break
+
+
+    case GAME.END:
+      break
   }
 
   return result
+}
+
+export const ReportMiddleware = ({ getState }) => (next) => (payload) => {
+  const result = next(payload),
+    { attacker, defender, type } = payload,
+    { characters, game } = getState(),
+    { round, turn } = game
+
+  // console.log( '++++++++++++++++++++++++++++++++++++++' )
+  // console.log( 'Characters: ', characters )
+  // console.log( '++++++++++++++++++++++++++++++++++++++' )
+
+  switch (type) {
+
+    case GAME.READY:
+
+      Object.keys(characters).forEach((name) => {
+
+        const {
+          agility, dexterity, heal, health, intelligence, mana, stamina, strength, race
+        } = characters[name]
+
+        console.log()
+        console.log(name, ':', race, { agility, dexterity, heal, health, intelligence, mana, strength, stamina })
+        console.log()
+
+      })
+
+      break
+
+    case GAME.ROUND.BEGIN:
+
+      console.log(`-- Round ${round} -- `)
+
+      break
+
+    case CHARACTERS.ATTACK:
+
+      console.log(`-- Turn ${turn} -- `)
+
+      console.log()
+      console.log(`-------- ++++++++ --------`)
+      console.log(`${attacker} hits ${defender} for ${characters[attacker].damage} damage.`)
+      console.log(`${defender} health is ${characters[defender].health} / ${characters[defender].maxHealth}. `)
+      console.log(`-------- ++++++++ --------`)
+      console.log()
+
+      break
+
+    case GAME.END:
+      console.log(`${characters[payload.defender].race} ${payload.defender} dies!!`)
+      console.log(`**** ++++++++++ ****`)
+      console.log(`${characters[payload.attacker].race} ${payload.attacker} wins!!`)
+      break
+  }
 }

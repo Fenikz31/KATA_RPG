@@ -1,26 +1,28 @@
 import { MergeObject } from '../lib/utils'
 import { BASE, CHARACTER, RACES } from './defaults.js'
-import { Dice } from './utils.js'
+import { Dice, JtagDice } from './utils.js'
 
 export const Characters = {
   attack(s) {
     const names = Object.keys(s),
 
       target = names.map((name) => s[name].target)
-        .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
+        .pop(),
       character = names.map((name) => s[name].attacker)
-        .reduce((a, b) => a.includes(b) ? a : [...a, b], []),
-      { health, agility, maxHealth } = s[target],
-      offense = (s[character].dexterity + s[character].damage) * 3,
-      defense = agility * 4,
+        .pop(),
+      { health, maxHealth } = s[target],
+      { strength } = s[character],
+      offense = JtagDice(3, strength),
+      damage = offense,
 
-      value = health - offense + defense
-
-    console.log([character] + ' hits for ' + offense + ' ' + [target])
-    console.log([target] + ' defense is ' + defense + '. ' + [target] + ' takes ' + (health - value) + ' damage.')
+      value = health - damage
 
     return {
       ...s,
+      [character]: {
+        ...s[character],
+        damage: damage
+      },
       [target]: {
         ...s[target],
         alive: value > 0,
@@ -33,6 +35,7 @@ export const Characters = {
     const races = Object.keys(RACES),
       selection = Dice(races.length) - 1,
       race = RACES[races[selection]],
+      raceSelected = races[selection],
       attributes = MergeObject(Object.keys(race)
         .map((attribut) => ({
           [attribut]: race[attribut] + BASE[attribut]
@@ -44,6 +47,7 @@ export const Characters = {
         ...CHARACTER,
         ...attributes,
         maxHealth: attributes.health,
+        race: raceSelected
       }
     }
   },
@@ -53,7 +57,7 @@ export const Characters = {
     const names = Object.keys(s),
       initiativeArr = names.map((name) => ({
         player: name,
-        score: Dice(s[name].dexterity + s[name].agility)
+        score: JtagDice(6,s[name].dexterity + s[name].agility)
       }))
       ,
       fastest = initiativeArr
@@ -92,6 +96,7 @@ export const Characters = {
     const attacker = attacker !== (character || undefined) ? target[0] : character[0],
       opponent = opponent !== (target || undefined) ? character[0] : target[0]
 
+      console.log('TEST: ')
     return {
       ...s,
       [character]: {
@@ -115,6 +120,15 @@ export const Game = {
       ...s,
       ready: true
 
+    }
+  },
+
+  next (property) {
+    return (s) => {
+      return {
+        ...s,
+        [ property ]: s[ property ] + 1
+      }
     }
   },
 

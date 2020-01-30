@@ -6,7 +6,9 @@ const CharactersReducerCreator = CreateReducer({})
 
 const GameReducerCreator = CreateReducer({
   ready: false,
-  initialization: false
+  initialization: false,
+  round: 0,
+  turn: 1
 })
 
 export const CharactersReducer = CharactersReducerCreator(
@@ -14,8 +16,20 @@ export const CharactersReducer = CharactersReducerCreator(
     CHARACTERS.ATTACK
   ),
 
+  ConnectMutator(Characters.check,
+    CHARACTERS.CHECK
+  ),
+
   ConnectMutator(Characters.create,
     CHARACTERS.CREATE
+  ),
+
+  ConnectMutator( Characters.damage,
+    CHARACTERS.DAMAGE
+  ),
+
+  ConnectMutator(Characters.dodge,
+    CHARACTERS.DODGE
   ),
 
   ConnectMutator(Characters.initiative,
@@ -26,9 +40,6 @@ export const CharactersReducer = CharactersReducerCreator(
     CHARACTERS.ORDER
   ),
 
-  ConnectMutator(Characters.check,
-    CHARACTERS.CHECK
-  ),
   /* 
   ConnectMutator( Characters.gainXP,
     CHARACTERS.GAIN_XP
@@ -57,6 +68,13 @@ export const GameReducers = GameReducerCreator(
   ConnectMutator(Game.ready,
     GAME.READY
   ),
+  ConnectMutator(Game.next('round'),
+    GAME.ROUND.BEGIN
+  ),
+
+  ConnectMutator(Game.next('turn'),
+    GAME.ROUND.NEXT
+  )
 
 
 )

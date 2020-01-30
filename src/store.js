@@ -7,6 +7,7 @@ import {
 
 import {
   GameMiddleware,
+  ReportMiddleware
 } from './middlewares'
 
 import {
@@ -25,7 +26,7 @@ import {
     ThunkMiddleware,
     ErrorMiddleware,
     GameMiddleware,
-    // ReportMiddleware
+    ReportMiddleware
   ))
   
   const reducers = combineReducers({

@@ -1,7 +1,7 @@
 import { CHARACTERS, GAME } from './src/descriptors'
 import Store from './src/store'
 
-Store.subscribe(() => console.log(Store.getState()))
+// Store.subscribe(() => console.log(Store.getState()))
 
 Store.dispatch({
     type: GAME.START, opponents: [
